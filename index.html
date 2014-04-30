@@ -5,12 +5,26 @@
   <title>Ember Starter Kit</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
   <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
+    <h2>Sportsball Game Stats Manager</h2>
 
     {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="teams">
+    <h4>Teams</h4>
+    {{input type="text" id="new-team" placeholder="New team name" value=newTeam action="createTeam" class="form-control"}}
+    <ul id="teams-list">
+      {{#each}}
+        <li>
+          {{teamName}}
+        </li>
+      {{/each}}
+    </ul>
+
   </script>
 
   <script type="text/x-handlebars" id="index">
@@ -24,6 +38,8 @@
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.5.1.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/localstorage_adapter.js"></script>
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
