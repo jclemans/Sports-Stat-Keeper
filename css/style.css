@@ -2,3 +2,8 @@
 .ember-application {
     margin: 20px;
 }
+
+.form {
+  width: 66%;
+  margin: 10px;
+}
