@@ -1,4 +1,4 @@
-//APP CREATE
+//APP
 window.App = Ember.Application.create();
 
 App.ApplicationSerializer = DS.LSSerializer.extend();
@@ -6,11 +6,11 @@ App.ApplicationAdapter = DS.LSAdapter.extend({
   namespace: 'app-emberjs'
 });
 
-//ROUTES
+//ROUTER
 App.Router.map(function() {
   this.resource('teams', { path: '/' }, function() {
     this.resource('team', { path: '/teams/:team_id' }, function() {
-      this.resource('players', { path: '/teams/:team_id/players' });
+      this.resource('players', { path: ':team_id/players' });
     });
   });
 });
@@ -23,14 +23,13 @@ App.PlayersRoute = Ember.Route.extend({
 
 App.TeamsRoute = Ember.Route.extend({
   model: function() {
-    return this.store.find('team');
+    return this.store.findAll('team', { order: 'teamName' });
   }
 });
 
 App.TeamRoute = Ember.Route.extend({
   model: function(params) {
-    var team = this.store.find('team', params.team_id);
-    return team;
+    return this.store.find('team', params.team_id)
   }
 });
 
@@ -49,20 +48,24 @@ App.Player = DS.Model.extend({
 //CONTROLLERS
 
 App.PlayersController = Ember.ArrayController.extend({
+  sortProperties: ['playerName'],
   actions: {
     createPlayer: function() {
       var playerName = this.get('newName');
+      if (!name.trim()) { return; }
       var player = this.store.createRecord('player', {
         playerName: playerName
       });
 
       this.set('newName', '');
       player.save();
+      this.get('players').pushObject(player);
     }
   }
 });
 
 App.TeamsController = Ember.ArrayController.extend({
+  sortProperties: ['teamName'],
   actions: {
     createTeam: function() {
       var teamName = this.get('newName');

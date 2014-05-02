@@ -9,45 +9,48 @@
 </head>
 
 <body>
-  <script type="text/x-handlebars" data-template-name="index">
+  <script type="text/x-handlebars">
     <div class="container">
+    <h1>Stats Manager</h1>
     {{outlet}}
     </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="teams">
-    <div class="col-md-6">
-      <h2>Sportsball Stats Manager</h2>
+    <div class="col-md-5" id="teams">
       <h4>Teams</h4>
         <div class="form">
           {{input type="text" id="new-team" placeholder="New team name" value=newName action="createTeam" class="form-control"}}
         </div>
-      <ul id="teams-list">
+      <ul id="teams-list" class="list-unstyled">
         {{#each itemController="team"}}
           <li>
-            <button {{action "removeTeam"}} class="btn btn-danger btn-xs">Remove</button>
+            <button {{action "removeTeam"}} class="btn btn-danger btn-xs">x</button>
             {{#link-to 'team' this}}{{teamName}}{{/link-to}}
           </li>
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-5" id="team">
       {{outlet}}
     </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="team">
     <h2>{{teamName}}</h2>
-    {{outlet}}
+    {{render "players" players}}
   </script>
 
   <script type="text/x-handlebars" data-template-name="players">
+    <h4>Roster</h4>
     {{input type="text" id="new-player" placeholder="New player name" value=newName action="createPlayer" class="form-control"}}
       <ul id="player-list">
-        {{#each itemController="player"}}
-          <li>
-            {{playerName}}
-          </li>
+        {{#each}}
+          <li>{{playerName}}</li>
+        {{else}}
+          <br>
+          <p>No players on this team yet. Use the field above to add a player.</p>
         {{/each}}
       </ul>
   </script>
