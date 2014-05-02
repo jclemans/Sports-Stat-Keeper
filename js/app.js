@@ -15,6 +15,7 @@ App.Router.map(function() {
   });
 });
 
+//ROUTES
 App.PlayersRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('player');
